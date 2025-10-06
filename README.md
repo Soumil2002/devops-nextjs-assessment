@@ -1,36 +1,155 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DevOps Internship Assessment: Containerize and Deploy a Next.js Application
 
-## Getting Started
+## **Project Overview**
 
-First, run the development server:
+This project demonstrates how to:
+
+- Containerize a Next.js application using Docker  
+- Automate Docker build and push using GitHub Actions and GitHub Container Registry (GHCR)  
+- Deploy the containerized app to Kubernetes (Minikube)  
+- Access the deployed application  
+
+---
+
+## **Table of Contents**
+
+1. [Project Setup](#project-setup)  
+2. [Dockerization](#dockerization)  
+3. [GitHub Actions Workflow](#github-actions-workflow)  
+4. [Kubernetes Deployment](#kubernetes-deployment)  
+5. [Accessing the Application](#accessing-the-application)  
+6. [Repository & GHCR Links](#repository--ghcr-links)  
+
+---
+
+## **Project Setup**
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Soumil2002/devops-nextjs-assessment.git
+cd devops-nextjs-assessment
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Run Locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Open browser: [http://localhost:3000](http://localhost:3000)  
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+> Screenshot Placeholder: `local-app.png`  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## **Dockerization**
 
-To learn more about Next.js, take a look at the following resources:
+### 1. Build Docker Image
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+docker build -t ghcr.io/soumil2002/devops-nextjs-app:latest .
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 2. Run Docker Container Locally
 
-## Deploy on Vercel
+```bash
+docker run -p 3000:3000 ghcr.io/soumil2002/devops-nextjs-app:latest
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Open browser: [http://localhost:3000](http://localhost:3000)  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> Screenshot Placeholder: `docker-local.png`  
+
+---
+
+## **GitHub Actions Workflow**
+
+- Workflow file: `.github/workflows/docker-publish.yml`  
+- This workflow builds the Docker image and pushes it to GHCR automatically on every push to the `main` branch.  
+- Make sure your **GHCR personal access token (PAT)** is added in GitHub Secrets as `GHCR_PAT`.  
+
+---
+
+## **Kubernetes Deployment**
+
+> Note: Deployment and service manifests are already present in `k8s/` folder (`deployment.yaml` and `service.yaml`).  
+
+### 1. Start Minikube
+
+```bash
+minikube start
+```
+
+### 2. Apply Kubernetes Manifests
+
+```bash
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+```
+
+### 3. Verify Pods & Service
+
+```bash
+kubectl get pods
+kubectl get svc
+```
+
+---
+
+## **Accessing the Application**
+
+### Option 1: Using Minikube Service Command
+
+```bash
+minikube service devops-nextjs-service
+```
+
+- Opens the app in your default browser automatically  
+
+### Option 2: Using NodePort Manually
+
+1. Get Minikube IP:
+
+```bash
+minikube ip
+```
+
+2. Get NodePort:
+
+```bash
+kubectl get svc devops-nextjs-service
+```
+
+3. Open browser:
+
+```
+http://<minikube-ip>:<NodePort>
+```
+
+> Example: `http://192.168.49.2:30379`  
+
+> Screenshot Placeholder: `k8s-app.png`  
+
+---
+
+## **Repository & GHCR Links**
+
+- GitHub Repository: [https://github.com/Soumil2002/devops-nextjs-assessment](https://github.com/Soumil2002/devops-nextjs-assessment)  
+- GHCR Docker Image: `ghcr.io/soumil2002/devops-nextjs-app:latest`  
+
+---
+
+## **Notes**
+
+- Docker image is **public**, so Kubernetes can pull it without authentication  
+- Readiness and liveness probes ensure pods restart if unhealthy  
+- Minikube NodePort exposes the app for local testing  
+- GitHub Actions automates Docker image build and push
+
