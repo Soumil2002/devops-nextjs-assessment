@@ -20,8 +20,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t ghcr.io/soumil2002/devops-nextjs-app:latest .
+        run: docker build -t ghcr.io/soumil2002/devops-nextjs-assessment/devops-nextjs-app:latest .
 
       - name: Push Docker image to GHCR
-        run: docker push ghcr.io/soumil2002/devops-nextjs-app:latest
+        run: docker push ghcr.io/soumil2002/devops-nextjs-assessment/devops-nextjs-app:latest
+
 
