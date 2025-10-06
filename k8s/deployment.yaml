@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-nextjs-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: devops-nextjs
+  template:
+    metadata:
+      labels:
+        app: devops-nextjs
+    spec:
+      containers:
+      - name: devops-nextjs-container
+        image: ghcr.io/soumil2002/devops-nextjs-app:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+
