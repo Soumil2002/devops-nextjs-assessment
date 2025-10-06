@@ -1,6 +1,5 @@
 name: Build and Push Docker Image
 
-# Trigger on push to main branch
 on:
   push:
     branches:
@@ -11,24 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout your code
+      # Step 1: Checkout your repo
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Log in to GitHub Container Registry
+      # Step 2: Login to GitHub Container Registry
       - name: Login to GHCR
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: soumil2002        # lowercase GitHub username
+          username: soumil2002       # lowercase GitHub username
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # Step 3: Build Docker image
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/soumil2002/devops-nextjs-assessment/devops-nextjs-app:latest .
+          docker build -t ghcr.io/soumil2002/devops-nextjs-app:latest .
 
       # Step 4: Push Docker image to GHCR
       - name: Push Docker image
         run: |
-          docker push ghcr.io/soumil2002/devops-nextjs-assessment/devops-nextjs-app:latest
+          docker push ghcr.io/soumil2002/devops-nextjs-app:latest
