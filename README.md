@@ -45,7 +45,7 @@ npm run dev
 
 - Open browser: [http://localhost:3000](http://localhost:3000)  
 
-> Screenshot Placeholder: `local-app.png`  
+<img width="2544" height="1364" alt="Screenshot 2025-10-06 at 15 16 26" src="https://github.com/user-attachments/assets/dccf6858-75e9-4ffa-b26e-cd2cf0d13676" />
 
 ---
 
@@ -65,7 +65,6 @@ docker run -p 3000:3000 ghcr.io/soumil2002/devops-nextjs-app:latest
 
 - Open browser: [http://localhost:3000](http://localhost:3000)  
 
-> Screenshot Placeholder: `docker-local.png`  
 
 ---
 
@@ -76,6 +75,11 @@ docker run -p 3000:3000 ghcr.io/soumil2002/devops-nextjs-app:latest
 - Make sure your **GHCR personal access token (PAT)** is added in GitHub Secrets as `GHCR_PAT`.  
 
 ---
+
+<img width="2552" height="1296" alt="Screenshot 2025-10-06 at 15 14 18" src="https://github.com/user-attachments/assets/0fcca639-c007-49f2-9f63-efe16cbebcf0" />
+
+<img width="2544" height="1064" alt="Screenshot 2025-10-06 at 15 14 36" src="https://github.com/user-attachments/assets/c20e214e-fb94-4bbc-8049-accdb99c73f6" />
+
 
 ## **Kubernetes Deployment**
 
@@ -134,8 +138,6 @@ http://<minikube-ip>:<NodePort>
 ```
 
 > Example: `http://192.168.49.2:30379`  
-
-> Screenshot Placeholder: `k8s-app.png`  
 
 ---
 
