@@ -20,7 +20,7 @@ jobs:
         with:
           registry: ghcr.io
           username: soumil2002       # lowercase GitHub username
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GHCR_PAT }}
 
       # Step 3: Build Docker image
       - name: Build Docker image
